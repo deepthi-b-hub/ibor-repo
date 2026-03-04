@@ -8,7 +8,7 @@ deploy_dbt_ibor:
 
       type: snowflake
 
-      account: la46900.us-east-2.aws
+      account: bv25297.central-india.azure
  
       # User/password auth
 
