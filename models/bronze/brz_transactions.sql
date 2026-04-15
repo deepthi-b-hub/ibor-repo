@@ -1,7 +1,7 @@
 {{
     config(
         materialized='view',
-        tags=['staging', 'transactions']
+        tags=['bronze', 'transactions']
     )
 }}
 

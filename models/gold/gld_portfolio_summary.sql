@@ -1,7 +1,7 @@
 {{
     config(
         materialized='table',
-        tags=['marts', 'portfolio', 'summary']
+        tags=['gold', 'portfolio', 'summary']
     )
 }}
 
@@ -25,7 +25,7 @@
 -- =========================================================
 
 with holdings as (
-    select * from {{ ref('portfolio_holdings') }}
+    select * from {{ ref('gld_portfolio_holdings') }}
 ),
 
 portfolio_metrics as (

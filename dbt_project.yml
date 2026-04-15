@@ -7,6 +7,7 @@ version: '1.0.0'
 
 # This setting configures which "profile" dbt uses for this project.
 #profile: 'ibor_analytics'
+#profile: 'deploy_dbt_ibor'
 profile: 'deploy_dbt_ibor'
 
 # These configurations specify where dbt should look for different types of files.
@@ -34,25 +35,28 @@ clean-targets:         # directories to be removed by `dbt clean`
 seeds:
   ibor_analytics:
     +schema: raw_data
+    +tags: ['raw_data']
     +quote_columns: false
 
 
 models:
   ibor_analytics:
-    # Staging layer - raw data cleaned and typed
-    staging:
+    # BRONZE Staging layer - raw data cleaned and typed
+    # staging:
+    bronze:
       +materialized: view
-      +schema: staging
-      +tags: ['staging']
+      +schema: bronze
+      +tags: ['bronze']
       
-    # Intermediate layer - business logic transformations
-    intermediate:
+    # SILVER - Intermediate layer - business logic transformations
+    # intermediate:
+    silver:
       +materialized: view
-      +schema: intermediate
-      +tags: ['intermediate']
+      +schema: silver
+      +tags: ['silver']
       
-    # Marts layer - final business entities
-    marts:
+    # GOLD - Marts layer - final business entities
+    gold:
       +materialized: table
-      +schema: marts
-      +tags: ['marts']
+      +schema: gold
+      +tags: ['gold']

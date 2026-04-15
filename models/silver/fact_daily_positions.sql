@@ -3,7 +3,7 @@
         materialized='incremental',
         unique_key='position_key',
         incremental_strategy='merge',
-        tags=['intermediate', 'positions', 'incremental']
+        tags=['silver', 'positions', 'incremental']
     )
 }}
  
@@ -28,7 +28,7 @@
 -- =========================================================
  
 with daily_positions as (
-    select * from {{ ref('int_position_daily') }}
+    select * from {{ ref('slr_position_daily') }}
    
     {% if is_incremental() %}
         -- On incremental runs, only process NEW dates
@@ -44,7 +44,7 @@ securities as (
         security_name,
         asset_class,
         sector
-    from {{ ref('stg_securities') }}
+    from {{ ref('brz_securities') }}
 ),
  
 portfolios as (
@@ -52,7 +52,7 @@ portfolios as (
         portfolio_id,
         portfolio_name,
         portfolio_manager
-    from {{ ref('stg_portfolios') }}
+    from {{ ref('brz_portfolios') }}
 ),
  
 enriched_positions as (

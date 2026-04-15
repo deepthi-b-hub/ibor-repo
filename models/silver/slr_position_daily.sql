@@ -1,7 +1,7 @@
 {{
     config(
         materialized='view',
-        tags=['intermediate', 'positions']
+        tags=['silver', 'positions']
     )
 }}
 
@@ -23,7 +23,7 @@
 with transactions as (
     -- Only include settled transactions
     -- Pending/Cancelled don't affect positions
-    select * from {{ ref('stg_transactions') }}
+    select * from {{ ref('brz_transactions') }}
     where status = 'SETTLED'
 ),
 
