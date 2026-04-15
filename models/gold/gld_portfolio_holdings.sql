@@ -1,7 +1,7 @@
 {{
     config(
         materialized='table',
-        tags=['marts', 'portfolio', 'holdings']
+        tags=['gold', 'portfolio', 'holdings']
     )
 }}
 
@@ -25,7 +25,7 @@
 -- =========================================================
 
 with current_positions as (
-    select * from {{ ref('int_current_positions') }}
+    select * from {{ ref('slr_current_positions') }}
 ),
 
 securities as (
@@ -36,7 +36,7 @@ securities as (
         asset_class,
         sector,
         country
-    from {{ ref('stg_securities') }}
+    from {{ ref('brz_securities') }}
 ),
 
 portfolios as (
@@ -46,7 +46,7 @@ portfolios as (
         portfolio_type,
         portfolio_manager,
         base_currency
-    from {{ ref('stg_portfolios') }}
+    from {{ ref('brz_portfolios') }}
 ),
 
 fx_rates as (
@@ -54,8 +54,8 @@ fx_rates as (
         from_currency,
         to_currency,
         exchange_rate
-    from {{ ref('stg_fx_rates') }}
-    where rate_date = (select max(rate_date) from {{ ref('stg_fx_rates') }})
+    from {{ ref('brz_fx_rates') }}
+    where rate_date = (select max(rate_date) from {{ ref('brz_fx_rates') }})
 ),
 
 holdings_with_fx as (

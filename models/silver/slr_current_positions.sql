@@ -1,7 +1,7 @@
 {{
     config(
         materialized='view',
-        tags=['intermediate', 'positions', 'valuations']
+        tags=['silver', 'positions', 'valuations']
     )
 }}
 
@@ -39,7 +39,7 @@ with latest_positions as (
             order by position_date desc
         ) as rn
 
-    from {{ ref('int_position_daily') }}
+    from {{ ref('slr_position_daily') }}
 ),
 
 current_positions as (
@@ -70,7 +70,7 @@ latest_prices as (
             order by price_date desc
         ) as rn
 
-    from {{ ref('stg_market_prices') }}
+    from {{ ref('brz_market_prices') }}
 ),
 
 current_prices as (

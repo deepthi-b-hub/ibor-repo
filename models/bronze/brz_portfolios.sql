@@ -1,7 +1,7 @@
 {{
     config(
         materialized='view',
-        tags=['staging', 'portfolios']
+        tags=['bronze', 'portfolios']
     )
 }}
 
